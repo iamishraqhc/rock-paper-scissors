@@ -12,7 +12,7 @@ const App = () => {
   const choices = ['rock', 'paper', 'scissors']
 
   const handleClick = (value) => {
-    setUserChoice(value)
+    setUserChoice(value)    
     generateComputerChoice()
   }
 
@@ -61,11 +61,16 @@ const App = () => {
       </div>
 
       <div className='choice'>
-        <h1>Your choice:</h1>
-        <img src={`../images/${userChoice}.png`} alt=''></img>
-        <h1>Computer's choice:</h1>
-        <img src={`../images/${computerChoice}.png`} alt=''></img>
+        <div className='choice-user'>
+          <h1>Your choice:</h1>
+          <img className='user-hand' src={`../images/${userChoice}.png`} alt=''></img>
+        </div>
+        <div className='choice-computer'>
+          <h1>Computer's choice:</h1>
+          <img className='computer-hand' src={`../images/${computerChoice}.png`} alt=''></img>
+        </div>
       </div>
+      
       <div className='button-div'>
         {choices.map((choice, index) =>
           <button className='button' key={index} onClick={() => handleClick(choice)} disabled={gameOver}>
@@ -73,12 +78,12 @@ const App = () => {
           </button>
         )}
       </div>
-
+      
       <div className='result'>
         <h1>Turn Result: {turnPoints}</h1>
         <h1>Final Result: {result}</h1>
       </div>
-
+      
       <div className='button-div'>
         {gameOver && 
           <button className='button' onClick={() => refresh()}>Restart Game?</button>
