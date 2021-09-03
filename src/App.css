@@ -7,7 +7,7 @@
 .App {
   text-align: center;
   height: 100vh;
-  background-color: aquamarine;
+  background-color: lightblue;
   font-family: sans-serif;
 }
 
@@ -104,7 +104,7 @@
 
 .button-div {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   padding: 20px;
 }
 
