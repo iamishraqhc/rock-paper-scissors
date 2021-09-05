@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 const App = () => {
   const [userChoice, setUserChoice] = useState('rock')
   const [computerChoice, setComputerChoice] = useState('rock')
-  const [userPoints, setUserPoints] = useState(1)
-  const [computerPoints, setComputerPoints] = useState(1)
+  const userPoints = useRef(0)
+  const computerPoints = useRef(0)
   const [turnPoints, setTurnPoints] = useState(null)
   const [result, setResult] = useState('Let\'s see who wins')
   const [gameOver, setGameOver] = useState(false)
@@ -27,37 +27,37 @@ const App = () => {
 
   useEffect(() => {
     const comboMoves = userChoice + computerChoice
-    if (userPoints < 5 && computerPoints < 5) {
+    if (userPoints.current <= 4 && computerPoints.current <= 4) {
       if (comboMoves === 'scissorspaper' || comboMoves === 'rockscissors' || comboMoves === 'paperrock') {
-        setUserPoints(userPoints => userPoints + 1)
+        userPoints.current += 1
         setTurnPoints('User gets the point!')
       }
 
       if (comboMoves === 'paperscissors' || comboMoves === 'scissorsrock' || comboMoves === 'rockpaper') {
-        setComputerPoints(computerPoints => computerPoints + 1)
+        computerPoints.current += 1
         setTurnPoints('Computer gets the point!')
       }
 
       if (comboMoves === 'paperpaper' || comboMoves === 'rockrock' || comboMoves === 'scissorsscissors') {
         setTurnPoints('No one gets a point!')
       }
-    } else if (userPoints === 5 && computerPoints < 5) {
-      setUserPoints(userPoints => userPoints + 1)
+    }  
+    if (userPoints.current === 5 && computerPoints.current < 5) {
       setResult('User Wins')
       setGameOver(true)
-    } else if (computerPoints === 5 && userPoints < 5) {
-      setComputerPoints(computerPoints => computerPoints + 1)
+    }
+    if (computerPoints.current === 5 && userPoints.current < 5) {
       setResult('Computer Wins')
       setGameOver(true)
     }
-  }, [computerChoice, userChoice])
+  }, [computerChoice, userChoice, userPoints, computerPoints])
 
   return (
     <div className="App">
       <h1 className='heading'>Rock-Paper-Scissors</h1>
       <div className='score'>
-        <h1>User Points: {userPoints - 1}</h1>
-        <h1>Computer Points: {computerPoints - 1}</h1>
+        <h1>User Points: {userPoints.current}</h1>
+        <h1>Computer Points: {computerPoints.current}</h1>
       </div>
 
       <div className='choice'>
